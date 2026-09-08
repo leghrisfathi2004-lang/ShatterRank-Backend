@@ -1,0 +1,51 @@
+classDiagram
+    class Player {
+        +String id
+        +String name
+        +String email
+        +String password
+        +Number score
+    }
+
+    class Team {
+        +String id
+        +String name
+        +Array players
+        +Number trophies
+    }
+
+    class Tournoi {
+        +String id
+        +String name
+        +String prize
+        +String status
+        +Array teams
+    }
+
+    class Matche {
+        +String id
+        +String status
+        +Number round
+        +String nextMatchId
+        +Array teams
+        +String winnerId
+        +String tournoiId
+        +Date date
+    }
+
+    class GiftCards {
+        +String id
+        +String code
+        +String provider
+        +String value
+        +String status
+        +String winnerId
+    }
+
+    Tournoi "1" --> "0..*" Team : contains
+    Team "1" --> "1..*" Player : has members
+    Tournoi "1" --> "0..1" GiftCards : offers prize
+    GiftCards "0..1" --> "1" Player : won by
+    Tournoi "1" --> "0..*" Matche : includes
+    Matche "0..*" --> "2" Team : features
+    Matche "0..1" --> "0..1" Matche : feeds winner to
