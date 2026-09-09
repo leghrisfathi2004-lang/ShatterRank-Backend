@@ -9,3 +9,6 @@ const playerSchem = new mongoose.Schema({
     teamId: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null}
 });
 
+const Player = mongoose.model('Player', playerSchem);
+
+export default Player;
