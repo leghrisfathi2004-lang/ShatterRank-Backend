@@ -10,4 +10,5 @@ const giftCardsSchema = new mongoose.Schema({
 });
 
 const GiftCard = mongoose.model('GiftCards', giftCardsSchema);
+
 export default GiftCard;

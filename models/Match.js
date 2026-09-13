@@ -11,7 +11,7 @@ const matchSchema = new mongoose.Schema({
     }],
     winnerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null},
     tournoiId: {type: mongoose.Schema.ObjectId, ref: 'Tournoi', required: true},
-    Date: {type: Date}
+    Date: {type: Date, default: Date.now}
 });
 
 const Match = mongoose.model('Match', matchSchema);
