@@ -1,0 +1,45 @@
+import GiftCard from "../models/Giftcards";
+
+const GetAll = async () => {
+    const giftCards = await GiftCard.find();
+    return giftCards;
+}
+
+const GetById = async (id) => {
+    const giftCard = await GiftCard.findById(id);
+    if (!giftCard)
+    {
+        const er = new Error('Gift Card not found!');
+        er.statuscode = 404;
+        er.status = 'fail';
+        throw er;
+    }
+    return giftCard;
+}
+
+const Add = async (code, provider, value) => {
+    const newGC = new GiftCard({ code, provider, value });
+    await newGC.save();
+    if (!newGC)
+    {
+        const er = new Error('Gift Card not created!');
+        er.statuscode = 400;
+        er.status = 'fail';
+        throw er;
+    }
+    return newGC;
+}
+
+const Update = async (id, winnerId) => {
+    const updated = await GiftCard.findByIdAndUpdate(id, {winnerId, status: 'assigned'}, {new: true, runValidators: true});
+    if (!updated)
+    {
+        const er = new Error('Gift Card not found!');
+        er.statuscode = 404;
+        er.status = 'fail';
+        throw er;
+    }
+    return updated;
+}
+
+export { GetAll, GetById, Add, Update };
