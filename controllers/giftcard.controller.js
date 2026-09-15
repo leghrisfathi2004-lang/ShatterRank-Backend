@@ -1,5 +1,5 @@
 import successRes from "../utils/Respond.js";
-import { GetAll, GetById, Add, Update } from "../services/giftcardService.js";
+import { GetAll, GetById, Add, Update } from "../services/giftcard.service.js";
 
 const getAllGiftCards = async (req, res, next) => {
     try {

@@ -1,5 +1,5 @@
 import successRes from "../utils/Respond.js";
-import { GetAll, GetById, generateMatches, close } from "../services/tournoiService.js";
+import { GetAll, GetByIdTournoi, generateMatches, close } from "../services/tournoi.service.js";
 
 const getAllTournois = async (req, res, next) => {
     try {
@@ -14,7 +14,7 @@ const getAllTournois = async (req, res, next) => {
 const getTournoiById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const tournoi = await GetById(id);
+        const tournoi = await GetByIdTournoi(id);
         successRes(res, 200, "Get success!", tournoi)
     }
     catch (e) {

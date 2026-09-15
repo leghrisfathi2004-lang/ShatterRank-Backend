@@ -1,4 +1,4 @@
-import { GetAll, GetOpen, GetFull, GetById, add } from "../services/teamService.js";
+import { GetAll, GetOpen, GetFull, GetById, add } from "../services/team.service.js";
 import successRes from '../utils/Respond.js';
 
 const getAllTeams = async (req, res, next) => {

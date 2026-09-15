@@ -1,5 +1,5 @@
 import successRes from "../utils/Respond.js";
-import {add, check} from "../services/authService.js";
+import {add, check} from "../services/auth.service.js";
  
 const register = async (req, res, next) => {
     try {

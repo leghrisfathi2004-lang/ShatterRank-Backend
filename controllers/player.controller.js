@@ -1,5 +1,5 @@
 import successRes from "../utils/Respond.js";
-import {GetAll, GetById, Update} from "../services/PlayerService.js";
+import {GetAll, GetById, Update} from "../services/player.service.js";
 
 const getPlayers = async (req, res, next) => {
     try {
@@ -33,3 +33,5 @@ const addToTeam = async (req, res, next) => {
         next(e);
     }
 }
+
+export { getPlayers, getPlayerId, addToTeam };

@@ -1,4 +1,4 @@
-import { GetAll, GetById, addGoal, add, addWinner, start } from "../services/matchService.js";
+import { GetAll, GetById, addGoal, add, addWinner, start } from "../services/match.service.js";
 import successRes from "../utils/Respond.js";
 
 export default async function getMatches (req, res, next) {
