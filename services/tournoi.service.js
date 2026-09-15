@@ -1,11 +1,11 @@
 import Tournoi from '../models/Tournoi.js';
-import { add } from './matchService.js';
+import { add } from './match.service.js';
 
 const GetAll = async () => {
     return await Tournoi.find().populate('prize').populate('teams');
 }
 
-const GetById = async (id) => {
+const GetByIdTournoi = async (id) => {
     const tournoi = await Tournoi.findById(id).populate('prize').populate('teams');
     if (!tournoi) {
         const er = new Error('Tournoi not found!');
@@ -82,4 +82,4 @@ const close = async (id) => {
     return tournoi;
 }
 
-export { GetAll, GetById, generateMatches, close };
+export { GetAll, GetByIdTournoi, generateMatches, close, add };

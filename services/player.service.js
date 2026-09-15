@@ -1,5 +1,5 @@
 import Player from "../models/Player.js";
-import {GetById, addPlayer} from "./teamService.js";
+import {GetById, addPlayer} from "./team.service.js";
 
 export async function GetAll() {
     const players = await Player.find();

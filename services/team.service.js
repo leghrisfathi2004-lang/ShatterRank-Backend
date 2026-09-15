@@ -69,4 +69,10 @@ const add = async ({ name, leaderId }) => {
     return newTeam;
 }
 
-export { GetAll, GetOpen, GetFull, GetById, addPlayer, add };
+const addTrophy = async (id, trophy) => {
+    const team = await GetById(id);
+    team.Trophies.push(trophy);
+    await team.save();
+}
+
+export { GetAll, GetOpen, GetFull, GetById, addPlayer, add, addTrophy };

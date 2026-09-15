@@ -1,4 +1,7 @@
 import Match from '../models/Match.js';
+import {Update} from './giftcard.service.js'
+import {addTrophy} from './team.service.js'
+import {GetByIdTournoi} from './tournoi.service.js'
 
 const GetAll = async () => {
     const matches = await Match.find();
@@ -52,9 +55,19 @@ const addWinner = async (id, winnerId) => {
     const match = await GetById(id);
     match.winnerId = winnerId;
     match.status = 'completed';
-    await setNext(match.nextMatchId, winnerId);
+    if (match.nextMatchId) 
+        await setNext(match.nextMatchId, winnerId);
+    if (!match.nextMatchId && match.tournoiId)
+        await setPrize(match.tournoiId, winnerId);
     await match.save();
     return match;
+}
+
+const setPrize = async (tournoiId, winnerId) => {
+    const tournoi = await GetByIdTournoi(tournoiId);
+    if(tournoi.prize)
+        await Update(tournoi.prize._id, winnerId);
+    await addTrophy(winnerId, tournoi.name);
 }
 
 const setNext = async (matchId, teamId) => {
