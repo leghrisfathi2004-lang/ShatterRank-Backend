@@ -1,6 +1,9 @@
-import { body, param } from 'express-validator';
+import { body } from 'express-validator';
 
 export const TeamValidator = [
-  param('LeaderId').isMongoId().withMessage('Invalid leader id'),
   body('name').trim().notEmpty().withMessage('Team name is required'),
+];
+
+export const joinTeamValidator = [
+  body('teamId').isMongoId().withMessage('Team id must be a valid Id'),
 ];
