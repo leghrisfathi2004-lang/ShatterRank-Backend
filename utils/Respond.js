@@ -5,7 +5,7 @@ export default function successRes(res, statusCode=200, message="Success" ,data=
         message
     }
 
-    if (!data)
+    if (data)
         resbody.data = data;
     return res.status(statusCode).json(resbody);
 }
