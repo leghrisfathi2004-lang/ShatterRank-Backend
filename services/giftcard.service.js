@@ -1,4 +1,4 @@
-import GiftCard from "../models/Giftcards";
+import GiftCard from "../models/Giftcards.js";
 
 const GetAll = async () => {
     const giftCards = await GiftCard.find();
@@ -10,7 +10,7 @@ const GetById = async (id) => {
     if (!giftCard)
     {
         const er = new Error('Gift Card not found!');
-        er.statuscode = 404;
+        er.statusCode = 404;
         er.status = 'fail';
         throw er;
     }
@@ -23,7 +23,7 @@ const Add = async (code, provider, value) => {
     if (!newGC)
     {
         const er = new Error('Gift Card not created!');
-        er.statuscode = 400;
+        er.statusCode = 400;
         er.status = 'fail';
         throw er;
     }
@@ -35,7 +35,7 @@ const Update = async (id, winnerId) => {
     if (!updated)
     {
         const er = new Error('Gift Card not found!');
-        er.statuscode = 404;
+        er.statusCode = 404;
         er.status = 'fail';
         throw er;
     }

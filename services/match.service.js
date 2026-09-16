@@ -13,7 +13,7 @@ const GetById = async (id) => {
     if (!match)
     {
         const er = new Error('Match not found!');
-        er.statuscode = 404;
+        er.statusCode = 404;
         er.status = 'fail';
         throw er;
     }
@@ -30,10 +30,10 @@ const start = async (id) => {
 const addGoal = async (id, teamId) => {
     const match = await GetById(id);
 
-    const teamIndex = match.teams.findIndex(team => team.teamId === teamId);
+    const teamIndex = match.teams.findIndex(team => team.teamId && team.teamId.equals(teamId));
     if (teamIndex === -1 || match.status !== 'live') {
         const er = new Error('Team not found in this match or match not live!');
-        er.statuscode = 404;
+        er.statusCode = 404;
         er.status = 'fail';
         throw er;
     }
@@ -43,13 +43,20 @@ const addGoal = async (id, teamId) => {
     return match;
 }
 
-const add = async (round, nextMatchId, teamId1, teamId2, tournoiId) => {
-
+const add = async ({ teamId1, teamId2, round = null, nextMatchId = null, tournoiId = null, Date }) => {
     const teams = [ {teamId: teamId1}, {teamId: teamId2} ];
-    const match = new Match({round, nextMatchId, teams, tournoiId});
+    const doc = { round, nextMatchId, teams, tournoiId };
+    if (Date !== undefined) doc.Date = Date;
+    const match = new Match(doc);
     await match.save();
     return match;
 }
+
+const createFriendly = ({ teamId1, teamId2, Date }) =>
+    add({ teamId1, teamId2, Date });
+
+const createTournoiMatch = ({ teamId1, teamId2, round, nextMatchId, tournoiId, Date }) =>
+    add({ teamId1, teamId2, round, nextMatchId, tournoiId, Date });
 
 const addWinner = async (id, winnerId) => {
     const match = await GetById(id);
@@ -70,17 +77,33 @@ const setPrize = async (tournoiId, winnerId) => {
     await addTrophy(winnerId, tournoi.name);
 }
 
-const setNext = async (matchId, teamId) => {
-    const match = await GetById(matchId);
-    if (match.teams.length >= 2) {
-        const er = new Error('Match already has two teams!');
-        er.statuscode = 400;
+const getProfile = async (id) => {
+    const match = await Match.findById(id)
+        .populate('teams.teamId', 'name Trophies')
+        .populate('winnerId', 'name')
+        .populate('tournoiId', 'name status')
+        .populate('nextMatchId', 'round status');
+    if (!match) {
+        const er = new Error('Match not found!');
+        er.statusCode = 404;
         er.status = 'fail';
         throw er;
     }
-    match.teams.push({ teamId, goals: 0 });
+    return match;
+}
+
+const setNext = async (matchId, teamId) => {
+    const match = await GetById(matchId);
+    const emptyIndex = match.teams.findIndex(team => !team.teamId);
+    if (emptyIndex === -1) {
+        const er = new Error('Match already has two teams!');
+        er.statusCode = 400;
+        er.status = 'fail';
+        throw er;
+    }
+    match.teams[emptyIndex].teamId = teamId;
     await match.save();
     return match;
 }
 
-export { GetAll, GetById, addGoal, add, addWinner, setNext, start };
+export { GetAll, GetById, addGoal, add, createFriendly, createTournoiMatch, addWinner, setNext, start, getProfile };
