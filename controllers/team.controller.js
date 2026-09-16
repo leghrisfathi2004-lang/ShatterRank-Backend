@@ -1,4 +1,4 @@
-import { GetAll, GetOpen, GetFull, GetById, add } from "../services/team.service.js";
+import { GetAll, GetOpen, GetFull, GetById, add, getProfile } from "../services/team.service.js";
 import successRes from '../utils/Respond.js';
 
 const getAllTeams = async (req, res, next) => {
@@ -45,12 +45,23 @@ const getTeamId = async (req, res, next) => {
 const postTeam = async (req, res, next) => {
     try {
         const { name } = req.body;
-        const {id} = req.params;
-        const newTeam = await add({ name, leaderId: id });
-        successRes(res, 201, "Team created succefully!", newTeam);
+        const leaderId = req.user._id;
+        const newTeam = await add({ name, leaderId });
+        successRes(res, 201, "Team created successfully!", newTeam);
     } catch (e) {
         next(e);
     }
 }
 
-export { getAllTeams, getOpenTeams, getFullTeams, getTeamId, postTeam };
+const getTeamProfile = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const profile = await getProfile(id);
+        successRes(res, 200, "Get success!", profile);
+    }
+    catch (e) {
+        next(e);
+    }
+}
+
+export { getAllTeams, getOpenTeams, getFullTeams, getTeamId, postTeam, getTeamProfile };
