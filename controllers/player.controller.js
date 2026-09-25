@@ -1,9 +1,9 @@
 import successRes from "../utils/Respond.js";
-import {GetAll, GetById, Update, quit, getProfile} from "../services/player.service.js";
+import {GetAll, GetById, Update, quit, getMe as getMeService, getLeaderboard as getLeaderboardService} from "../services/player.service.js";
 
 const getPlayers = async (req, res, next) => {
     try {
-        const players = await GetAll();
+        const players = await GetAll(req.pagination.page);
         successRes(res, 200, "Get success!", players)
     }
     catch (e) {
@@ -45,15 +45,24 @@ const quitTeam = async (req, res, next) => {
     }
 }
 
-const getPlayerProfile = async (req, res, next) => {
+const getMe = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const profile = await getProfile(id);
-        successRes(res, 200, "Get success!", profile);
+        const player = await getMeService(req.user._id);
+        successRes(res, 200, "Get success!", player);
     }
     catch (e) {
         next(e);
     }
 }
 
-export { getPlayers, getPlayerId, addToTeam, quitTeam, getPlayerProfile };
+const getLeaderboard = async (req, res, next) => {
+    try {
+        const board = await getLeaderboardService(req.pagination.page);
+        successRes(res, 200, "Get success!", board);
+    }
+    catch (e) {
+        next(e);
+    }
+}
+
+export { getPlayers, getPlayerId, addToTeam, quitTeam, getMe, getLeaderboard };

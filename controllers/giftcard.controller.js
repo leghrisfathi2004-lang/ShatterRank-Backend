@@ -3,7 +3,7 @@ import { GetAll, GetById, Add, Update } from "../services/giftcard.service.js";
 
 const getAllGiftCards = async (req, res, next) => {
     try {
-        const giftCards = await GetAll();
+        const giftCards = await GetAll(req.pagination.page);
         successRes(res, 200, "Get success!", giftCards)
     }
     catch (e) {
@@ -36,11 +36,8 @@ const addwinnerGC = async (req, res, next) => {
     try {
         const {id} = req.params;
         const {winnerId} = req.body;
-
         const updated = await Update(id, winnerId);
-
-        if (!updated)
-        successRes(res, 200, "Gift card updated succefully!", updated);
+        successRes(res, 200, "Gift card updated successfully!", updated);
     } catch(e) {
         next(e);
     }

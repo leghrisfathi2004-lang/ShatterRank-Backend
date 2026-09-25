@@ -3,7 +3,7 @@ import { GetAll, GetByIdTournoi, generateMatches, close, add, getProfile } from 
 
 const getAllTournois = async (req, res, next) => {
     try {
-        const tournois = await GetAll();
+        const tournois = await GetAll(req.pagination.page);
         successRes(res, 200, "Get success!", tournois)
     }
     catch (e) {

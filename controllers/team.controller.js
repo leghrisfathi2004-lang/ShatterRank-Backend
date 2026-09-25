@@ -3,7 +3,7 @@ import successRes from '../utils/Respond.js';
 
 const getAllTeams = async (req, res, next) => {
     try {
-        const teams = await GetAll();
+        const teams = await GetAll(req.pagination.page);
         successRes(res, 200, "Get success!", teams)
     }
     catch (e) {
@@ -13,7 +13,7 @@ const getAllTeams = async (req, res, next) => {
 
 const getOpenTeams = async (req, res, next) => {
     try {
-        const teams = await GetOpen();
+        const teams = await GetOpen(req.pagination.page);
         successRes(res, 200, "Get success!", teams)
     }
     catch (e) {
@@ -23,7 +23,7 @@ const getOpenTeams = async (req, res, next) => {
 
 const getFullTeams = async (req, res, next) => {
     try {
-        const teams = await GetFull();
+        const teams = await GetFull(req.pagination.page);
         successRes(res, 200, "Get success!", teams)
     }
     catch (e) {

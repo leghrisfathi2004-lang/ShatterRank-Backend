@@ -1,9 +1,10 @@
 import { GetAll, GetById, addGoal as addGoalService, createFriendly, addWinner, start, getProfile } from "../services/match.service.js";
+import { addScore } from "../services/player.service.js";
 import successRes from "../utils/Respond.js";
 
 export async function getMatchs (req, res, next) {
     try {
-        const matches = await GetAll();
+        const matches = await GetAll(req.pagination.page);
         successRes(res, 200, "Get success!", matches)
     }
     catch (e) {
@@ -24,8 +25,8 @@ export async function getMatchId (req, res, next){
 
 export async function addMatch (req, res, next) {
     try {
-        const { teamId1, teamId2, Date } = req.body;
-        const match = await createFriendly({ teamId1, teamId2, Date });
+        const { teamId1, teamId2 } = req.body;
+        const match = await createFriendly({ teamId1, teamId2 });
         successRes(res, 201, "Friendly match created successfully!", match)
     } catch (e) {
         next(e);
@@ -35,8 +36,9 @@ export async function addMatch (req, res, next) {
 export async function addGoalMatch (req, res, next) {
     try {
         const {id} = req.params;
-        const { teamId } = req.body;
+        const { teamId, scorerId } = req.body;
         const match = await addGoalService(id, teamId);
+        await addScore(scorerId);
         successRes(res, 200, "Goal added successfully!", match)
     } catch (e) {
         next(e);
