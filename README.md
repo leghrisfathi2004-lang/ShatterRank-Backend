@@ -174,7 +174,3 @@ List endpoints accept `?page=N` (default `1`, fixed limit of `10`) and return:
 ```
 
 ---
-
-### API reference
-
-See [`API.md`](./API.md) for the full endpoint list, request bodies, and access levels (public / user / admin).
