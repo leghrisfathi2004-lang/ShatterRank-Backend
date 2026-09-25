@@ -2,10 +2,13 @@ import Match from '../models/Match.js';
 import {Update} from './giftcard.service.js'
 import {addTrophy} from './team.service.js'
 import {GetByIdTournoi} from './tournoi.service.js'
+import paginate from '../utils/paginate.js';
 
-const GetAll = async () => {
-    const matches = await Match.find();
-    return matches;
+const GetAll = async (page) => {
+    return await paginate(Match, {
+        page,
+        populate: { path: 'teams.teamId', select: 'name' },
+    });
 }
 
 const GetById = async (id) => {
@@ -43,20 +46,18 @@ const addGoal = async (id, teamId) => {
     return match;
 }
 
-const add = async ({ teamId1, teamId2, round = null, nextMatchId = null, tournoiId = null, Date }) => {
+const add = async ({ teamId1, teamId2, round = null, nextMatchId = null, tournoiId = null }) => {
     const teams = [ {teamId: teamId1}, {teamId: teamId2} ];
-    const doc = { round, nextMatchId, teams, tournoiId };
-    if (Date !== undefined) doc.Date = Date;
-    const match = new Match(doc);
+    const match = new Match({ round, nextMatchId, teams, tournoiId });
     await match.save();
     return match;
 }
 
-const createFriendly = ({ teamId1, teamId2, Date }) =>
-    add({ teamId1, teamId2, Date });
+const createFriendly = ({ teamId1, teamId2 }) =>
+    add({ teamId1, teamId2 });
 
-const createTournoiMatch = ({ teamId1, teamId2, round, nextMatchId, tournoiId, Date }) =>
-    add({ teamId1, teamId2, round, nextMatchId, tournoiId, Date });
+const createTournoiMatch = ({ teamId1, teamId2, round, nextMatchId, tournoiId }) =>
+    add({ teamId1, teamId2, round, nextMatchId, tournoiId });
 
 const addWinner = async (id, winnerId) => {
     const match = await GetById(id);

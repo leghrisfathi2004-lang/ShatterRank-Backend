@@ -1,9 +1,10 @@
 import Tournoi from '../models/Tournoi.js';
 import Match from '../models/Match.js';
 import { createTournoiMatch } from './match.service.js';
+import paginate from '../utils/paginate.js';
 
-const GetAll = async () => {
-    return await Tournoi.find().populate('prize').populate('teams');
+const GetAll = async (page) => {
+    return await paginate(Tournoi, { page, populate: [{ path: 'prize' }, { path: 'teams' }] });
 }
 
 const GetByIdTournoi = async (id) => {

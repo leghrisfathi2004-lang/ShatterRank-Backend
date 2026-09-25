@@ -1,8 +1,8 @@
 import GiftCard from "../models/Giftcards.js";
+import paginate from "../utils/paginate.js";
 
-const GetAll = async () => {
-    const giftCards = await GiftCard.find();
-    return giftCards;
+const GetAll = async (page) => {
+    return await paginate(GiftCard, { page });
 }
 
 const GetById = async (id) => {
