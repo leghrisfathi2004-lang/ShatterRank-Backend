@@ -4,13 +4,17 @@ import { getAllGiftCards, getGiftCardById, addGiftCard, addwinnerGC } from "../c
 import {addGCValidator, assignGCValidator} from "../middleware/validators/giftcard.validator.js"
 import { validate } from "../middleware/validate.js";
 import { authenticate, requireRole } from "../middleware/authenticate.js";
+import { pagination } from "../middleware/pagination.js";
 
 const GCRoute = express.Router();
-const admin = [authenticate, requireRole('admin')];
+const admin = requireRole('admin');
 
-GCRoute.get('/giftcards', admin, getAllGiftCards);
-GCRoute.get('/giftcards/:id', admin, getGiftCardById);
-GCRoute.post('/giftcards/new', admin, addGCValidator, validate, addGiftCard);
-GCRoute.put('/giftcards/:id/assign', admin, assignGCValidator, validate, addwinnerGC);
+GCRoute.use(authenticate);
+GCRoute.use(admin);
+
+GCRoute.get('/giftcards', pagination, getAllGiftCards);
+GCRoute.get('/giftcards/:id', getGiftCardById);
+GCRoute.post('/giftcards/new', addGCValidator, validate, addGiftCard);
+GCRoute.put('/giftcards/:id/assign', assignGCValidator, validate, addwinnerGC);
 
 export default GCRoute;
