@@ -1,4 +1,3 @@
-// models/GiftCards.js
 import mongoose from "mongoose";
 
 const giftCardsSchema = new mongoose.Schema({

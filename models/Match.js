@@ -9,9 +9,8 @@ const matchSchema = new mongoose.Schema({
         goals: {type: Number, default: 0}
     }],
     winnerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Team', default: null},
-    tournoiId: {type: mongoose.Schema.ObjectId, ref: 'Tournoi', default: null},
-    Date: {type: Date, default: Date.now}
-});
+    tournoiId: {type: mongoose.Schema.ObjectId, ref: 'Tournoi', default: null}
+}, { timestamps: true });
 
 const Match = mongoose.model('Match', matchSchema);
 
