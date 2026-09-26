@@ -4,6 +4,18 @@ REST API for ShutterRank — teams, tournois (brackets), matches, and gift-card 
 
 ---
 
+### Features en bref
+
+- **Auth** — register / login with JWT (`Bearer` tokens), bcrypt-hashed passwords, admin bootstrapped from `.env` on first boot.
+- **Players** — public slim profile, private `/me` view, leaderboard sorted by score, `+5` score on each goal scored.
+- **Teams** — create (creator becomes leader), join, quit (leaders can't quit), 11-player cap, one team per player.
+- **Matches** — friendly matches and auto-generated tournoi brackets, goal tracking per team, winner advances to next round.
+- **Tournois** — admin creates with a list of teams (power-of-2), backend generates the full bracket, awards trophy + gift card to the final winner.
+- **Gift cards** — admin-only CRUD, auto-assigned to tournoi winners, code hidden from public team profiles.
+- **Cross-cutting** — role-based guards, `?page=N` pagination on list endpoints, consistent JSON envelope, centralized error handler.
+
+---
+
 ### Tech stack
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
@@ -173,4 +185,18 @@ List endpoints accept `?page=N` (default `1`, fixed limit of `10`) and return:
 { "items": [...], "page": 1, "limit": 10, "total": 34, "pages": 4 }
 ```
 
+---
+
+### Diagrams
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b779f764-987f-4296-8565-ac3d0e2da294" alt="Use case diagram" width="45%">
+  &nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/9c32e887-d9a3-482e-9d88-8570bd314c2c" alt="Class diagram" width="45%">
+</p>
+
+<p align="center">
+  <b>Class</b> — Mongoose models and their relationships.&nbsp;·&nbsp;
+  <b>Use case</b> — actors (Player, Admin) & their actions. 
+</p>
 ---
