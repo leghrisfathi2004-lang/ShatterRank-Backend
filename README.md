@@ -199,4 +199,8 @@ List endpoints accept `?page=N` (default `1`, fixed limit of `10`) and return:
   <b>Class</b> — Mongoose models and their relationships.&nbsp;·&nbsp;
   <b>Use case</b> — actors (Player, Admin) & their actions. 
 </p>
+<<<<<<< HEAD
 ---
+=======
+---
+>>>>>>> 9399e00a024772160f68e4688ba2f2980fac8ef2
