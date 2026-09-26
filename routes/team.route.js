@@ -10,11 +10,11 @@ const teamRoute = express.Router();
 
 teamRoute.use(authenticate);
 
-teamRoute.get("/teams", pagination, getAllTeams);
-teamRoute.get("/teams/open", pagination, getOpenTeams);
-teamRoute.get("/teams/full", pagination, getFullTeams);
-teamRoute.get("/teams/:id", getTeamId);
-teamRoute.get("/teams/:id/profile", getTeamProfile);
-teamRoute.post("/teams/new", TeamValidator, validate, postTeam);
+teamRoute.get("/", pagination, getAllTeams);
+teamRoute.get("/open", pagination, getOpenTeams);
+teamRoute.get("/full", pagination, getFullTeams);
+teamRoute.get("/:id", getTeamId);
+teamRoute.get("/:id/profile", getTeamProfile);
+teamRoute.post("/new", TeamValidator, validate, postTeam);
 
 export default teamRoute;

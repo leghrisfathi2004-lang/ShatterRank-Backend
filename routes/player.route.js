@@ -10,11 +10,11 @@ const playerRoute = express.Router();
 
 playerRoute.use(authenticate);
 
-playerRoute.get('/players', pagination, getPlayers);
-playerRoute.get('/players/me', getMe);
-playerRoute.get('/players/leaderboard', pagination, getLeaderboard);
-playerRoute.get('/players/:id', getPlayerId);
-playerRoute.post('/players/join', joinTeamValidator, validate, addToTeam);
-playerRoute.post('/players/quit', quitTeam);
+playerRoute.get('/', pagination, getPlayers);
+playerRoute.get('/me', getMe);
+playerRoute.get('/leaderboard', pagination, getLeaderboard);
+playerRoute.get('/:id', getPlayerId);
+playerRoute.post('/join', joinTeamValidator, validate, addToTeam);
+playerRoute.post('/quit', quitTeam);
 
 export default playerRoute;

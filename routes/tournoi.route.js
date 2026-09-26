@@ -11,10 +11,10 @@ const admin = requireRole('admin');
 
 TournoiRoute.use(authenticate);
 
-TournoiRoute.get('/tournois', pagination, getAllTournois);
-TournoiRoute.get('/tournois/:id', getTournoiById);
-TournoiRoute.get('/tournois/:id/profile', getTournoiProfile);
-TournoiRoute.post('/tournois/new', admin, TournoiValidator, validate, addTournoi);
-TournoiRoute.put('/tournois/:id/close', admin, closeTournoi);
+TournoiRoute.get('/', pagination, getAllTournois);
+TournoiRoute.get('/:id', getTournoiById);
+TournoiRoute.get('/:id/profile', getTournoiProfile);
+TournoiRoute.post('/new', admin, TournoiValidator, validate, addTournoi);
+TournoiRoute.put('/:id/close', admin, closeTournoi);
 
 export default TournoiRoute;

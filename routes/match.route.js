@@ -11,12 +11,12 @@ const admin = requireRole('admin');
 
 matchRoute.use(authenticate);
 
-matchRoute.get('/matchs', pagination, getMatchs);
-matchRoute.get('/matchs/:id', getMatchId);
-matchRoute.get('/matchs/:id/profile', getMatchProfile);
-matchRoute.post('/matchs/new', admin, addMatchValidator, validate, addMatch);
-matchRoute.patch('/matchs/:id/goal', admin, teamIdValidator, validate, addGoalMatch);
-matchRoute.patch('/matchs/:id/finish', admin, finishMatchValidator, validate, finishMatch);
-matchRoute.patch('/matchs/:id/start', admin, startMatch);
+matchRoute.get('/', pagination, getMatchs);
+matchRoute.get('/:id', getMatchId);
+matchRoute.get('/:id/profile', getMatchProfile);
+matchRoute.post('/new', admin, addMatchValidator, validate, addMatch);
+matchRoute.patch('/:id/goal', admin, teamIdValidator, validate, addGoalMatch);
+matchRoute.patch('/:id/finish', admin, finishMatchValidator, validate, finishMatch);
+matchRoute.patch('/:id/start', admin, startMatch);
 
 export default matchRoute;

@@ -12,9 +12,9 @@ const admin = requireRole('admin');
 GCRoute.use(authenticate);
 GCRoute.use(admin);
 
-GCRoute.get('/giftcards', pagination, getAllGiftCards);
-GCRoute.get('/giftcards/:id', getGiftCardById);
-GCRoute.post('/giftcards/new', addGCValidator, validate, addGiftCard);
-GCRoute.put('/giftcards/:id/assign', assignGCValidator, validate, addwinnerGC);
+GCRoute.get('/', pagination, getAllGiftCards);
+GCRoute.get('/:id', getGiftCardById);
+GCRoute.post('/new', addGCValidator, validate, addGiftCard);
+GCRoute.put('/:id/assign', assignGCValidator, validate, addwinnerGC);
 
 export default GCRoute;
